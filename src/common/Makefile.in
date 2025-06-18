@@ -24,10 +24,10 @@ endif
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(patsubst %.cpp,%.o,$(SOURCES))
 
-CXX = g++
-CXXFLAGS = -Wall
-OPTFLAGS = -O3
-DEBUGFLAGS = -g
+CXX ?= g++
+CXXFLAGS ?= -Wall
+OPTFLAGS ?= -O3
+DEBUGFLAGS ?= -g
 
 ifeq "$(shell uname)" "Darwin"
 CXXFLAGS += -arch x86_64
@@ -41,10 +41,13 @@ ifdef OPT
 CXXFLAGS += $(OPTFLAGS)
 endif
 
+# Allow external CPPFLAGS, but include SMITHLAB_CPP path
+CPPFLAGS += -I$(SMITHLAB_CPP)
+
 all: $(OBJECTS)
 
 %.o: %.cpp %.hpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $< -I $(SMITHLAB_CPP)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $< -I $(SMITHLAB_CPP)
 
 clean: 
 	@-rm -f *.o *~
