@@ -2,8 +2,16 @@ AC_INIT(Piranha, version-1.2.1)
 
 # Allow the user to specify where the BAMTools headers and libraries are
 # located.
-AC_ARG_WITH(stuff, [  --with-bam_tools_headers            specify the location of BAMTools headers if they're not in a default search path])
-AC_ARG_WITH(stuff, [  --with-bam_tools_library            specify the location of the BAMTools libraries if they're not in a default search path])
+#AC_ARG_WITH(stuff, [  --with-bam_tools_headers            specify the location of BAMTools headers if they're not in a default search path])
+#AC_ARG_WITH(stuff, [  --with-bam_tools_library            specify the location of the BAMTools libraries if they're not in a default search path])
+AC_ARG_WITH([bam_tools_headers],
+  [AS_HELP_STRING([--with-bam_tools_headers=DIR],
+  [Specify the location of BamTools headers])])
+
+AC_ARG_WITH([bam_tools_library],
+  [AS_HELP_STRING([--with-bam_tools_library=DIR],
+  [Specify the location of BamTools libraries])])
+
 
 # do tilde expansion on the paths given by the user and echo them back
 if test "$with_bam_tools_headers" != ""

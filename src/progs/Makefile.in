@@ -23,15 +23,16 @@ endif
 
 PROGS = Piranha Simulate
 
-CXX = g++
-CFLAGS = -Wall -fPIC -fmessage-length=50
-OPTFLAGS = -O3
-DEBUGFLAGS = -g 
-COMMON_DIR = ../common/
-LIBS = -lgsl -lgslcblas @bamlibdir@ @bamlib@
+CXX ?= g++
+CFLAGS ?= -Wall -fPIC -fmessage-length=50
+OPTFLAGS ?= -O3
+DEBUGFLAGS ?= -g 
+COMMON_DIR ?= ../common/
+LIBS ?= $(shell gsl-config --libs) @bamlibdir@ @bamlib@
 
+GSL_INCLUDE := $(shell gsl-config --cflags)
 INCLUDEDIRS = $(SMITHLAB_CPP) $(COMMON_DIR) @bamhead@
-INCLUDEARGS = $(addprefix -I,$(INCLUDEDIRS))
+INCLUDEARGS = $(addprefix -I,$(INCLUDEDIRS)) $(GSL_INCLUDE)
 
 ifeq "$(shell uname)" "Darwin"
 CFLAGS += -arch x86_64
